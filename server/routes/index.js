@@ -43,6 +43,7 @@ router.post('/api/message', function(req, res, next) {
 			res.send("<Response><Message>Something went wrong...</Message></Response>");
 		}
 		else {
+			console.log("particle response was ", body);
 			res.send("<Response><Message>Got it!</Message></Response>");
 		}
 	});
