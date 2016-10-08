@@ -1,5 +1,6 @@
 var express = require('express');
 var router = express.Router();
+var request = require('request');
 
 /* GET home page. */
 router.get('/', function(req, res, next) {
@@ -12,7 +13,7 @@ router.get('/api/message', function(req, res, next) {
 		url: "https://api.particle.io/v1/devices/stranger_electron/message",
 		method: "POST",
 		form: {
-			arg: request.param.message,
+			arg: req.param.message,
 			access_token: process.env.PARTICLE_ACCESS_TOKEN
 		}
 	}, function (error, response, body) {
@@ -33,7 +34,7 @@ router.post('/api/message', function(req, res, next) {
 		url: "https://api.particle.io/v1/devices/stranger_electron/message",
 		method: "POST",
 		form: {
-			arg: request.body,
+			arg: req.body,
 			access_token: process.env.PARTICLE_ACCESS_TOKEN
 		}
 	}, function (error, response, body) {
