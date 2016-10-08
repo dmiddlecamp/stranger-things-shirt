@@ -7,16 +7,24 @@ router.get('/', function(req, res, next) {
   res.render('index', { title: 'Express' });
 });
 
-router.get('/api/message', function(req, res, next) {
+//var access_token = "___";
+var access_token = process.env.PARTICLE_ACCESS_TOKEN;
 
+
+router.get('/api/message', function(req, res, next) {
 	request({
 		url: "https://api.particle.io/v1/devices/stranger_electron/message",
 		method: "POST",
+//		params: {
+//			access_token: access_token
+//		},
 		form: {
 			arg: req.param.message,
-			access_token: process.env.PARTICLE_ACCESS_TOKEN
+			access_token: access_token
 		}
 	}, function (error, response, body) {
+
+		console.log("sent ", message, " particle response was ", body);
 
 		if (error) {
 			res.send("<Response><Message>Something went wrong...</Message></Response>");
@@ -29,21 +37,22 @@ router.get('/api/message', function(req, res, next) {
 
 
 router.post('/api/message', function(req, res, next) {
-
 	request({
 		url: "https://api.particle.io/v1/devices/stranger_electron/message",
 		method: "POST",
 		form: {
 			arg: req.body,
-			access_token: process.env.PARTICLE_ACCESS_TOKEN
+			access_token: access_token
 		}
 	}, function (error, response, body) {
+
+		console.log("sent ", message, " particle response was ", body);
 
 		if (error) {
 			res.send("<Response><Message>Something went wrong...</Message></Response>");
 		}
 		else {
-			console.log("particle response was ", body);
+
 			res.send("<Response><Message>Got it!</Message></Response>");
 		}
 	});
