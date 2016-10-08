@@ -8,9 +8,22 @@ router.get('/', function(req, res, next) {
 
 router.get('/api/message', function(req, res, next) {
 
+	request({
+		url: "https://api.particle.io/v1/devices/stranger_electron/message",
+		method: "POST",
+		form: {
+			arg: request.body,
+			access_token: process.env.PARTICLE_ACCESS_TOKEN
+		}
+	}, function (error, response, body) {
 
-
-	res.json({ok:true});
+		if (error) {
+			res.send("<Response><Message>Something went wrong...</Message></Response>");
+		}
+		else {
+			res.send("<Response><Message>Got it!</Message></Response>");
+		}
+	});
 });
 
 
