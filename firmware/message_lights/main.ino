@@ -25,12 +25,13 @@ void setup() {
 }
 
 int onMessage(String message) {
-    int msgLen = message.length();
-    strncpy(messageBuffer, message.c_str(), msgLen);
+    message.toCharArray(messageBuffer, BUFFER_SIZE);
+
     messageDisplayCount = 0;
     Particle.publish("message", " got: " + message);
     Particle.publish("message", " displaying: " + String(messageBuffer));
-    return msgLen;
+
+    return message.length();
 }
 
 void loop(){

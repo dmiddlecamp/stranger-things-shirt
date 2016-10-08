@@ -12,7 +12,7 @@ var access_token = process.env.PARTICLE_ACCESS_TOKEN;
 
 
 router.get('/api/message', function(req, res, next) {
-	var message = req.param.message;
+	var message = req.param.message.toLowerCase();
 
 	request({
 		url: "https://api.particle.io/v1/devices/stranger_electron/message",
@@ -39,7 +39,7 @@ router.get('/api/message', function(req, res, next) {
 
 
 router.post('/api/message', function(req, res, next) {
-	var message = req.body.Body;
+	var message = req.body.Body.toLowerCase();
 
 	request({
 		url: "https://api.particle.io/v1/devices/stranger_electron/message",
