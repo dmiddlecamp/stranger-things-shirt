@@ -1,32 +1,49 @@
 
 #include "Stranger.h"
+#define MESSAGE_COUNT_TIMES 3
+#define BUFFER_SIZE 1024
+
+
+SYSTEM_THREAD(ENABLED);
+
+
+
+
+char messageBuffer[BUFFER_SIZE];
+unsigned int messageDisplayCount = MESSAGE_COUNT_TIMES;
+
 
 Stranger things;
 
 void setup() {
     Serial.begin(9600);
 
+    Particle.function("message", onMessage);
+
     things.init();
     things.allOff();
 }
 
+int onMessage(String message) {
+    int msgLen = message.length();
+    strncpy(messageBuffer, message.c_str(), msgLen);
+    messageDisplayCount = 0;
+    return msgLen;
+}
 
 void loop(){
 
-    things.testAll();
+    if ((messageDisplayCount < MESSAGE_COUNT_TIMES) && (messageBuffer != NULL) && (strlen(messageBuffer) > 0)) {
+        things.message(messageBuffer);
+        things.flashMessage(messageBuffer, 5);
+        messageDisplayCount++;
+    }
+    else {
+        things.message("dance");
+        things.flashMessage("dance", 5);
+    }
+
     delay(2500);
-
-    things.allOff();
-
-
-    //things.messxage("thequickbrownfoxjumpedoverthelazyyellowdog");
-    //things.flashMessage("thequickbrownfoxjumpsoverthelazyyellowdog", 5);
-
-    things.message("dance");
-    things.flashMessage("dance", 5);
-
-    delay(1000);
-
 }
 
 

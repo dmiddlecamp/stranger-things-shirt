@@ -58,6 +58,10 @@
 
     void Stranger::letter(char letter, bool onOff) {
         int idx = letter - 'a';
+        if ((idx < 0) || (idx >= 26)) {
+            return;
+        }
+
         LightItem item = this->_mapping[idx];
 //        uint32_t color = item.color;
 //        if (!onOff) {
