@@ -12,6 +12,8 @@ var access_token = process.env.PARTICLE_ACCESS_TOKEN;
 
 
 router.get('/api/message', function(req, res, next) {
+	var message = req.param.message;
+
 	request({
 		url: "https://api.particle.io/v1/devices/stranger_electron/message",
 		method: "POST",
@@ -19,7 +21,7 @@ router.get('/api/message', function(req, res, next) {
 //			access_token: access_token
 //		},
 		form: {
-			arg: req.param.message,
+			arg: message,
 			access_token: access_token
 		}
 	}, function (error, response, body) {
@@ -37,11 +39,13 @@ router.get('/api/message', function(req, res, next) {
 
 
 router.post('/api/message', function(req, res, next) {
+	var message = req.body;
+
 	request({
 		url: "https://api.particle.io/v1/devices/stranger_electron/message",
 		method: "POST",
 		form: {
-			arg: req.body,
+			arg: message,
 			access_token: access_token
 		}
 	}, function (error, response, body) {
