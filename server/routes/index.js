@@ -39,7 +39,7 @@ router.get('/api/message', function(req, res, next) {
 
 
 router.post('/api/message', function(req, res, next) {
-	var message = req.body;
+	var message = req.body.Body;
 
 	request({
 		url: "https://api.particle.io/v1/devices/stranger_electron/message",
